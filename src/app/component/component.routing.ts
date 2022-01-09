@@ -8,12 +8,17 @@ import { BadgeComponent } from './badge/badge.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { CardsComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
+import { ClientComponent } from './client/client.component';
 
 
 export const ComponentsRoutes: Routes = [
 	{
 		path: '',
 		children: [
+			{
+				path:'clients',
+				component : ClientComponent
+			},
 			{
 				path: 'table',
 				component: TableComponent

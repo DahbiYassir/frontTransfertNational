@@ -1,0 +1,159 @@
+<div id="container" class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+
+        <!-- Button add modal -->
+        <div class="row justify-content-between">
+            <div class="col-3">
+                <h4 class="card-title">Liste des Clients</h4>
+                <h5 class="card-subtitle text-muted">Agence Marrakech</h5>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Nouveau Client
+                </button>
+            </div>
+        </div>
+
+        <!-- add Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ajouter un Client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form #addForm="ngForm" (ngSubmit)="onAddClient(addForm)">
+                        <div class="mb-3">
+                          <label for="nomInput" class="form-label">Nom</label>
+                          <input type="text" ngModel name="nom" class="form-control" id="nomInput" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="prenomInput" class="form-label">Prénom</label>
+                          <input type="text" ngModel name="prenom" class="form-control" id="prenomInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cinInput" class="form-label">CIN</label>
+                            <input type="text" ngModel name="cin" class="form-control" id="cinInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telInput" class="form-label">Téléphone</label>
+                            <input type="number" ngModel name="telephone" class="form-control" id="telInput" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="closeButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                      </form>
+                </div>
+               
+            </div>
+            </div>
+        </div>
+
+        <!-- Tableau -->
+          <div class="table-responsive">
+            <table class="table align-middle text-nowrap">
+                <thead>
+                    <tr>
+                        <th class="text-dark font-medium fs-4">Client</th>
+                        <th class="text-dark font-medium fs-4">Cin</th>
+                        <th class="text-dark font-medium fs-4">Telephone</th>
+                        <th class="text-dark font-medium fs-4">Date de création</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let c of clients'>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" alt="user" width="35" class="rounded-circle">
+                                <div class="ms-3">
+                                    <h5 class="mb-0 font-medium">{{c.nom}} {{c.prenom}}</h5>
+                                    <span class="text-muted">{{c.idClient}}</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="fs-4">{{c.cin}}</td>
+    
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{c.telephone}}</h5>
+                        </td>
+
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{c.dateCreation}}</h5>
+                        </td>
+                        <td>
+                            <a class ="btn" (click)="openEditModal(c)"><i style="color:#3a8bf6" class="far fa-edit"></i></a>
+                            <a class="btn" (click)="openDeleteModal(c.idClient)"><i class="far fa-trash-alt" style="color:red"></i></a>
+                        </td>
+                    </tr>              
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier un Client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form #editForm="ngForm">
+                        <div class="mb-3">
+                            <input type="hidden" ngModel="{{editClient?.idClient}}" name="idClient" class="form-control" id="idInput" required>
+                          </div>
+                        <div class="mb-3">
+                          <label for="nomInput" class="form-label">Nom</label>
+                          <input type="text" ngModel="{{editClient?.nom}}" name="nom" class="form-control" id="nomInput" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="prenomInput" class="form-label">Prénom</label>
+                          <input type="text" ngModel="{{editClient?.prenom}}" name="prenom" class="form-control" id="prenomInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cinInput" class="form-label">CIN</label>
+                            <input type="text" ngModel="{{editClient?.cin}}" name="cin" class="form-control" id="cinInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telInput" class="form-label">Téléphone</label>
+                            <input type="number" ngModel="{{editClient?.telephone}}" name="telephone" class="form-control" id="telInput" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="closeButton2" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button (click)="onUpdateClient(editForm.value)" [disabled]="editForm.invalid" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                      </form>
+                </div>
+               
+            </div>
+            </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer un Client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <h5><i style="color:red" class="far fa-exclamation-circle"></i> Etes-vous sûr de vouloir supprimer ce client ?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-danger" (click)="onDeleteClient(deleteId)">Supprimer</button>
+                  </div>
+               
+            </div>
+            </div>
+        </div>
+
+        </div>
+      </div>
