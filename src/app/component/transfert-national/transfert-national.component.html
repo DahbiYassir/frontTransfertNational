@@ -1,0 +1,125 @@
+
+<div id="container" class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+
+      <div class="row justify-content-between">
+          <div class="col-3">
+              <h4 class="card-title">Liste des Transferts</h4>
+              <h5 class="card-subtitle text-muted">Agence Marrakech</h5>
+          </div>
+          <!-- Button add modal -->
+          <div class="col-2">
+              <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Nouveau Transfert
+              </button>
+          </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="form-group" style="margin-top:15px; margin-bottom:15px;">
+          <input type="text" class="form-control search-field" placeholder="Recherche" [(ngModel)]="searchText">
+      </div>
+
+      <!-- Tableau -->
+        
+          <table class="table align-middle text-nowrap">
+              <thead>
+                  <tr>
+                      <th class="text-dark font-medium fs-4">Transfert</th>
+                      <th class="text-dark font-medium fs-4">PIN</th>
+                      <th class="text-dark font-medium fs-4">Montant</th>
+                      <th class="text-dark font-medium fs-4">Statut</th>
+                      <th class="text-dark font-medium fs-4">Client</th>
+                      <th class="text-dark font-medium fs-4">Beneficiare</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let t of transferts | searchFilter : searchText | paginate: {itemsPerPage:1, currentPage:p};">
+                      <td>
+                          <div class="d-flex align-items-center">
+                              <img src="https://us.123rf.com/450wm/alexsunset/alexsunset1612/alexsunset161200336/69423244-cash-icon-en-style-plat-isol%C3%A9-sur-fond-blanc-symbole-d-argent-pour-la-conception-de-sites-web-logo-i.jpg?ver=6" alt="user" width="35" class="rounded-circle">
+                              <div class="ms-3">
+                                  <h5 class="mb-0 font-medium">{{t.codeT}}</h5>
+                                  <span class="text-muted">{{t.reference}}</span>
+                              </div>
+                          </div>
+                      </td>
+
+                      <td class="fs-4">{{t.pin}}</td>
+  
+                      <td>
+                          <h5 class="mb-0 fw-normal">{{t.montant}}</h5>
+                      </td>
+
+                      <td>
+                          <h5 class="mb-0 fw-normal">{{t.statut}}</h5>
+                      </td>
+                      <td>
+                          <h5 class="mb-0 fw-normal">{{t.clientDonneur}}</h5>
+                      </td>
+                      <td>
+                          <h5 class="mb-0 fw-normal">{{t.clientBeneficiaire}}</h5>
+                      </td>
+                  </tr>              
+              </tbody>
+              <pagination-controls (pageChange)= "p = $event"></pagination-controls>
+          </table>
+      </div>
+
+      </div>
+    </div>
+  
+  <!-- Add Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Transfert National</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form [formGroup]="formGroup">
+          <div class="row">
+            <div class="col-6">
+              <mat-form-field>
+                <mat-label>
+                  Client
+                </mat-label>
+                <input formControlName="client" matInput type="text" [matAutocomplete]="auto" />
+                <mat-autocomplete #auto="matAutocomplete"> 
+                  <mat-option *ngFor="let item of filtredOptions" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <div class="mb-3">
+              <label for="montantInput" class="form-label">Montant</label>
+              <input matInput type="number"  name="montant" id="montantInput" placeholder="00.00" required>
+            </div>
+            </div>
+            <div class="col-6">
+              <mat-form-field>
+                <mat-label>
+                  Beneficiare
+                </mat-label>
+                <input formControlName="client" matInput type="text" [matAutocomplete]="auto" />
+                <mat-autocomplete #auto="matAutocomplete"> 
+                  <mat-option *ngFor="let item of filtredOptions" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            </div>
+          </div>
+            
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary">Valider</button>
+        </div>
+      </div>
+    </div>
+  </div>

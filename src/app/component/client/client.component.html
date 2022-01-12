@@ -3,17 +3,22 @@
       <div class="card">
         <div class="card-body">
 
-        <!-- Button add modal -->
         <div class="row justify-content-between">
             <div class="col-3">
                 <h4 class="card-title">Liste des Clients</h4>
                 <h5 class="card-subtitle text-muted">Agence Marrakech</h5>
             </div>
+            <!-- Button add modal -->
             <div class="col-2">
                 <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Nouveau Client
                 </button>
             </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="form-group" style="margin-top:15px; margin-bottom:15px;">
+            <input type="text" class="form-control search-field" placeholder="Recherche" [(ngModel)]="searchText">
         </div>
 
         <!-- add Modal -->
@@ -65,7 +70,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let c of clients'>
+                    <tr *ngFor="let c of clients | searchFilter : searchText | paginate: {itemsPerPage:1, currentPage:p};">
                         <td>
                             <div class="d-flex align-items-center">
                                 <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" alt="user" width="35" class="rounded-circle">
@@ -91,6 +96,7 @@
                         </td>
                     </tr>              
                 </tbody>
+                <pagination-controls (pageChange)= "p = $event"></pagination-controls>
             </table>
         </div>
 

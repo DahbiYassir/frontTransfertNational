@@ -13,6 +13,12 @@ import { ButtonsComponent } from './buttons/buttons.component';
 import { CardsComponent } from './card/card.component';
 import { TableComponent } from "./table/table.component";
 import { ClientComponent } from './client/client.component';
+import { SearchFilterPipe } from './search-filter.pipe';
+import { TransfertNationalComponent } from './transfert-national/transfert-national.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NgxPaginationModule } from 'ngx-pagination'
+
 
 @NgModule({
   imports: [
@@ -21,6 +27,10 @@ import { ClientComponent } from './client/client.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    NgxPaginationModule
+    
   ],
   declarations: [
     NgbdpaginationBasicComponent,
@@ -30,7 +40,9 @@ import { ClientComponent } from './client/client.component';
     ButtonsComponent,
     CardsComponent,
     TableComponent,
-    ClientComponent
+    ClientComponent,
+    SearchFilterPipe,
+    TransfertNationalComponent
   ]
 })
 export class ComponentsModule { }

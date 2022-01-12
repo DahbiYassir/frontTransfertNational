@@ -12,8 +12,8 @@ import { NgForm } from '@angular/forms';
 })
 export class ClientComponent implements OnInit {
 
-  
-
+ searchText : String=""; 
+ p : number = 1 ;
  client: Client = {
   idClient : 12312312,
     nom: "jalota" ,
@@ -22,14 +22,22 @@ export class ClientComponent implements OnInit {
     telephone:2126525232 ,
     dateCreation : new Date(),
 };
-public clients : Client[]=[this.client];
+client2: Client = {
+  idClient : 54232312,
+    nom: "hamid" ,
+    prenom: "lhench",
+    cin: "E126535",
+    telephone:2123598632 ,
+    dateCreation : new Date(),
+};
+public clients : Client[]=[];
 public editClient ?: Client ;
 public deleteId ?:any;
   constructor(private clientService : ClientService) { }
 
 
   ngOnInit(): void {
-    //this.getAllClients();
+    this.getAllClients();
   }
   public onDeleteClient(id : number){
     console.log('Id :' +id);
@@ -60,14 +68,14 @@ public deleteId ?:any;
     document.getElementById('closeButton2')?.click();
     console.log("onUpdateClient Method");
     console.log(client);
-      // this.clientService.updateClient(client).subscribe(
-      //   (response : Client) =>{
-      //     console.log('Client mise à jour !');
-      //     this.getAllClients();
-      //   },(error : HttpErrorResponse) =>{
-      //     alert(error.message);
-      //   }
-      // )
+      this.clientService.updateClient(client).subscribe(
+        (response : Client) =>{
+          console.log('Client mise à jour !');
+          this.getAllClients();
+        },(error : HttpErrorResponse) =>{
+          alert(error.message);
+        }
+      )
   }
   public openEditModal(client : Client){
     this.editClient = client;
@@ -86,14 +94,14 @@ public deleteId ?:any;
     document.getElementById('closeButton')?.click();
     console.log("onAddClient Method");
     console.log(addForm.value);
-      // this.clientService.addClient(addForm.value).subscribe(
-      //   (response : Client) =>{
-      //     console.log('Ajout client réussi');
-      //     this.getAllClients();
-      //   },(error : HttpErrorResponse) =>{
-      //     alert(error.message);
-      //   }
-      // )
+      this.clientService.addClient(addForm.value).subscribe(
+        (response : Client) =>{
+          console.log('Ajout client réussi');
+          this.getAllClients();
+        },(error : HttpErrorResponse) =>{
+          alert(error.message);
+        }
+      )
   }
 
   public getAllClients() : void {
