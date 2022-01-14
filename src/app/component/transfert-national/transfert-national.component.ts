@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { TransfertNational, StatusTransfert } from '../../transfert-national';
+import { TransfertNationalService } from '../../services/transfert-national.service';
+import { HttpErrorResponse } from '@angular/common/http/http';
+import { ClientService } from '../../services/client.service';
+import { Client } from '../../client';
+import { TransfertDto } from '../../transfert-dto';
+
 
 
 @Component({
@@ -10,51 +16,40 @@ import { TransfertNational, StatusTransfert } from '../../transfert-national';
 })
 export class TransfertNationalComponent implements OnInit {
   title ='autocomplete';
-  options =["hamid","simo","simhamed"];
-  filtredOptions =["hamid","simo","simhamed"];
+  options : String[] = [];
+  filtredOptions :String[] = [];
+  filtredOptions2 :String[] = [];
   formGroup ?: FormGroup
   searchText : String="";
+   t : TransfertDto = {
+    clientSender : "",
+    clientReceiver : "",
+    montant : 0,
+    refAgent  : ""
+   } ;
 
-  t : TransfertNational ={
-    codeT : 231312,
-    reference : "HFSRGQ123",
-    pin : "P213D",
-    motifExtourne : "motif",
-    montant : 560,
-    dateCreation : new Date(),
-    dateExperation : new Date(),
-    statut : StatusTransfert.PAYE,
-    refAgent : "A7863",
-    clientDonneur : "H23131",
-    clientBeneficiaire : "E5141"
-  }
-  tt : TransfertNational ={
-    codeT : 252312,
-    reference : "HadzQ1653",
-    pin : "P1098756D",
-    motifExtourne : "motif 2",
-    montant : 1000,
-    dateCreation : new Date(),
-    dateExperation : new Date(),
-    statut : StatusTransfert.ASERVIR,
-    refAgent : "A7863",
-    clientDonneur : "F2412401",
-    clientBeneficiaire : "L14531"
-  }
-  transferts : TransfertNational[] = [this.t, this.tt];
+  transferts : TransfertNational[] = [];
   p : number = 1;
-
-  constructor(private fb : FormBuilder) {  }
+  
+  
+  constructor(private clientService : ClientService,private transfertService : TransfertNationalService, private fb : FormBuilder) {  }
 
   ngOnInit(): void {
     this.initForm();
+    this.getTransferts();
+    this.getClients();
   }
 
   initForm(){
     this.formGroup = this.fb.group({
-      'client' : ['']
+      'client' : [''],
+      'beneficiare' : [''],
+      'montant' : ['']
     })
     this.formGroup.get('client')?.valueChanges.subscribe(response => {
+      this.filterData(response);
+    } )
+    this.formGroup.get('beneficiare')?.valueChanges.subscribe(response => {
       this.filterData(response);
     } )
   }
@@ -62,6 +57,62 @@ export class TransfertNationalComponent implements OnInit {
     this.filtredOptions = this.options.filter(item=>{
       return item.toLowerCase().indexOf(entredData.toLowerCase()) > -1
     })
+    this.filtredOptions2 = this.options.filter(item=>{
+      return item.toLowerCase().indexOf(entredData.toLowerCase()) > -1
+    })
+  }
+  
+  getTransferts(){
+    this.transfertService.getTransferts().subscribe(
+      (response : any) =>{
+        this.transferts = response;
+        console.log('transferts',response);
+
+      },
+      (error : HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    )
+  }
+  getClients(){
+    console.log('getClients()')
+    this.clientService.getClients().subscribe(
+      (response : any) =>{
+        console.log('clients names :')
+        console.log(response)
+        response.forEach((element: any) => {
+          console.log('element')
+          console.log(element.cin);
+          this.options.push(element.cin)
+          this.filtredOptions.push(element.cin)
+          this.filtredOptions2.push(element.cin)
+        });
+        console.log(this.options);
+      },
+      (error : HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    )
+  }
+
+  public onAddTransfert(addForm2 : NgForm) : void{
+    document.getElementById('closeButton')?.click();
+    console.log("onAddtransfert Method");
+    console.log(addForm2.value);
+    console.log(addForm2.value.client);
+    this.t.clientReceiver = addForm2.value.beneficiare;
+    this.t.clientSender = addForm2.value.client;
+    this.t.montant = addForm2.value.montant;
+    this.t.refAgent = "ref5457";
+    console.log(this.t);
+      this.transfertService.addTransfert(this.t).subscribe(
+        (response : TransfertNational) =>{
+          console.log('Ajout client réussi');
+          this.getTransferts();
+        },(error : HttpErrorResponse) =>{
+          alert(error.message);
+        }
+      )
   }
 
 }

@@ -36,7 +36,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor="let t of transferts | searchFilter : searchText | paginate: {itemsPerPage:1, currentPage:p};">
+                  <tr *ngFor="let t of transferts | searchFilter : searchText | paginate: {itemsPerPage:5, currentPage:p};">
                       <td>
                           <div class="d-flex align-items-center">
                               <img src="https://us.123rf.com/450wm/alexsunset/alexsunset1612/alexsunset161200336/69423244-cash-icon-en-style-plat-isol%C3%A9-sur-fond-blanc-symbole-d-argent-pour-la-conception-de-sites-web-logo-i.jpg?ver=6" alt="user" width="35" class="rounded-circle">
@@ -80,46 +80,52 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <form [formGroup]="formGroup">
+
+        <form #addForm2="ngForm" (ngSubmit)="onAddTransfert(addForm2)" [formGroup]="formGroup">
+
           <div class="row">
             <div class="col-6">
               <mat-form-field>
                 <mat-label>
                   Client
                 </mat-label>
-                <input formControlName="client" matInput type="text" [matAutocomplete]="auto" />
+                <input ngModel name="client" formControlName="client" matInput type="text" [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete"> 
                   <mat-option *ngFor="let item of filtredOptions" [value]="item">
-                    {{item}}
+                    <span style="font-size: 10px;">{{item}}</span>
                   </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
             <div class="mb-3">
-              <label for="montantInput" class="form-label">Montant</label>
-              <input matInput type="number"  name="montant" id="montantInput" placeholder="00.00" required>
+              <label  for="montantInput" class="form-label">Montant</label>
+              <input ngModel name="montant" matInput type="number" formControlName="montant" id="montantInput" placeholder="00.00" required>
             </div>
+            <!-- <div class="mb-3">
+              <label  for="ref" class="form-label">ref Agent</label>
+              <input ngModel name="refagent" matInput type="text" formControlName="refagent" id="ref"  required>
+            </div> -->
             </div>
             <div class="col-6">
               <mat-form-field>
                 <mat-label>
                   Beneficiare
                 </mat-label>
-                <input formControlName="client" matInput type="text" [matAutocomplete]="auto" />
+                <input ngModel name="beneficiare" formControlName="beneficiare" matInput type="text" [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete"> 
-                  <mat-option *ngFor="let item of filtredOptions" [value]="item">
+                  <mat-option *ngFor="let item of filtredOptions2" [value]="item">
                     {{item}}
                   </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
             </div>
           </div>
-            
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Valider</button>
+          </div> 
         </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          <button type="button" class="btn btn-primary">Valider</button>
-        </div>
+       
       </div>
     </div>
   </div>

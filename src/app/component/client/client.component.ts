@@ -14,26 +14,12 @@ export class ClientComponent implements OnInit {
 
  searchText : String=""; 
  p : number = 1 ;
- client: Client = {
-  idClient : 12312312,
-    nom: "jalota" ,
-    prenom: "imrane",
-    cin: "EE812555",
-    telephone:2126525232 ,
-    dateCreation : new Date(),
-};
-client2: Client = {
-  idClient : 54232312,
-    nom: "hamid" ,
-    prenom: "lhench",
-    cin: "E126535",
-    telephone:2123598632 ,
-    dateCreation : new Date(),
-};
+
 public clients : Client[]=[];
 public editClient ?: Client ;
 public deleteId ?:any;
-  constructor(private clientService : ClientService) { }
+
+constructor(private clientService : ClientService) { }
 
 
   ngOnInit(): void {
@@ -41,14 +27,14 @@ public deleteId ?:any;
   }
   public onDeleteClient(id : number){
     console.log('Id :' +id);
-    // this.clientService.deleteClient(id).subscribe(
-    //     (response : any) =>{
-    //       console.log('Client supprimmé !');
-    //       this.getAllClients();
-    //     },(error : HttpErrorResponse) =>{
-    //       alert(error.message);
-    //     }
-    //   )
+    this.clientService.deleteClient(id).subscribe(
+        (response : any) =>{
+          console.log('Client supprimmé !');
+          this.getAllClients();
+        },(error : HttpErrorResponse) =>{
+          alert(error.message);
+        }
+      )
   }
 
   public openDeleteModal(id : number){

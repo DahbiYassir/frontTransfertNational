@@ -6,7 +6,7 @@ export interface TransfertNational {
     montant : number;
     dateCreation : Date;
     dateExperation : Date;
-    statut : StatusTransfert;
+    statut : String;
     refAgent : String;
     clientDonneur : String;
     clientBeneficiaire : String;

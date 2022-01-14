@@ -9,14 +9,14 @@ import { environment } from 'src/environments/environment';
 })
 export class ClientService {
 
-  private apiUrl = environment.apiBaseUrl;
+  private apiUrl = environment.apiClientCompteUrl;
   constructor(private http : HttpClient) { }
 
   public getClients() : Observable<Client>{
       return this.http.get<Client>(`${this.apiUrl}/clients`);
   }
   public addClient(client : Client) : Observable<Client> {
-    return this.http.post<Client>(`${this.apiUrl}/clients`,client);
+    return this.http.post<Client>(`${this.apiUrl}/clients/saveClient`,client);
   }
   public updateClient(client : Client) : Observable<Client> {
     return this.http.put<Client>(`${this.apiUrl}/clients/${client.idClient}`,client);
