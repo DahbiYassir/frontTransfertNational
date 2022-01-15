@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl : 'https://cloud-gatewayy-app.herokuapp.com'
+  apiBaseUrl : 'https://client-servicee.herokuapp.com'
 };
 
 /*

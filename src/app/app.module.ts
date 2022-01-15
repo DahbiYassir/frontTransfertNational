@@ -4,11 +4,12 @@ import {
   CommonModule, LocationStrategy,
   PathLocationStrategy
 } from '@angular/common';
+
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
-
+import {MatGridListModule} from '@angular/material/grid-list';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FullComponent } from './layouts/full/full.component';
@@ -24,6 +25,7 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -42,6 +44,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SidebarComponent,
   ],
   imports: [
+    
+   
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -51,6 +55,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbModule,
     RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' }),
     PerfectScrollbarModule,
+
+
   ],
   providers: [
     {

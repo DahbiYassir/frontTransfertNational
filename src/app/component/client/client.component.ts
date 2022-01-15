@@ -41,14 +41,14 @@ public deleteId ?:any;
   }
   public onDeleteClient(id : number){
     console.log('Id :' +id);
-    // this.clientService.deleteClient(id).subscribe(
-    //     (response : any) =>{
-    //       console.log('Client supprimmé !');
-    //       this.getAllClients();
-    //     },(error : HttpErrorResponse) =>{
-    //       alert(error.message);
-    //     }
-    //   )
+    this.clientService.deleteClient(id).subscribe(
+        (response : any) =>{
+          console.log('Client supprimmé !');
+          this.getAllClients();
+        },(error : HttpErrorResponse) =>{
+          alert(error.message);
+        }
+      )
   }
 
   public openDeleteModal(id : number){

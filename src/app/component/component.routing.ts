@@ -10,6 +10,7 @@ import { CardsComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
 import { ClientComponent } from './client/client.component';
 import { TransfertNationalComponent } from './transfert-national/transfert-national.component';
+import { TransfertMultipleComponent } from './transfert-multiple/transfert-multiple.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -21,8 +22,12 @@ export const ComponentsRoutes: Routes = [
 				component : ClientComponent
 			},
 			{
-				path:'transfertN',
+				path:'transfertN',  
 				component : TransfertNationalComponent
+			},
+			{
+				path:'transfertMultiple',  
+				component : TransfertMultipleComponent
 			},
 			{
 				path: 'table',

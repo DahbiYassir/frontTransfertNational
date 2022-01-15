@@ -16,7 +16,7 @@ export class ClientService {
       return this.http.get<Client>(`${this.apiUrl}/clients`);
   }
   public addClient(client : Client) : Observable<Client> {
-    return this.http.post<Client>(`${this.apiUrl}/clients`,client);
+    return this.http.post<Client>(`${this.apiUrl}/clients/saveClient`,client);
   }
   public updateClient(client : Client) : Observable<Client> {
     return this.http.put<Client>(`${this.apiUrl}/clients/${client.idClient}`,client);

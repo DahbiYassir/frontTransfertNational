@@ -19,6 +19,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
+    path: '/component/transfertMultiple',
+    title: 'Transfert Multiple',
+    icon: 'bi bi-card-text',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
     path: '/dashboard',
     title: 'Dashboard',
     icon: 'bi bi-speedometer2',

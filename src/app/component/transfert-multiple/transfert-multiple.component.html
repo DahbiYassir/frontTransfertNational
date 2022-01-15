@@ -1,0 +1,196 @@
+<div id="container" class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+  
+        <div class="row justify-content-between">
+            <div class="col-3">
+                <h4 class="card-title">Transfert Multiple</h4>
+                <h5 class="card-subtitle text-muted">Agence Marrakech</h5>
+                
+            </div>
+          
+        </div>
+  
+       <!-- start  -->
+       <div class=" content">
+        <div class=" row">
+          <div class=" col-md-12">
+            <div class=" card">
+              <div class=" card-body">
+                <!-- tableau benef -->
+                   <!-- Tableau -->
+          <div class="table-responsive">
+            <table class="table align-middle text-nowrap">
+                <thead>
+                    <tr>
+                       
+                        <th class="text-dark font-medium fs-4">Client</th>
+                        <th class="text-dark font-medium fs-4">Montant</th>
+                        <th>
+                                     <!-- Button add modal -->
+                          <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Nouveau Bénéficiaire
+                        </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of clients;">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" alt="user" width="35" class="rounded-circle">
+                                <div class="ms-3">
+                                    <h5 class="mb-0 font-medium">{{c.client.nom}} {{c.client.prenom}}</h5>
+                                    <span class="text-muted">{{c.client.cin}}</span>
+                                </div>
+                            </div>
+                        </td>
+
+    
+                        <td>
+                            <h5 class="mb-0 fw-normal">{{c.montant}}</h5>
+                        </td>
+
+
+                        <td>
+                            <a class="btn" (click)="openDeleteModal(c.client.cin)"><i class="far fa-trash-alt" style="color:red"></i></a>
+                        </td>
+                    </tr>              
+                </tbody>
+            </table>
+        </div>
+                <!-- end tableau benef -->
+                <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer un Client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <h5><i style="color:red" class="far fa-exclamation-circle"></i> Etes-vous sûr de vouloir supprimer ce beneficiaire ?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButton2">Annuler</button>
+                    <button type="button" class="btn btn-danger" (click)="openDeleteBenef(deletecin)">Supprimer</button>
+                  </div>
+               
+            </div>
+            </div>
+        </div>
+            <!-- add beneeef -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Ajouter un Client</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                       <!-- form start -->
+                       <form #addForm="ngForm" (ngSubmit)="onAddBenef(addForm)" [formGroup]="formGroup">
+                        <div class="row">
+                          <div class="col-6">
+                            <mat-form-field>
+                              <mat-label>
+                                Beneficiaire
+                              </mat-label>
+                              <input ngModel name="client" formControlName="client" matInput type="text" [matAutocomplete]="auto" />
+                              <mat-autocomplete #auto="matAutocomplete"> 
+                                <mat-option *ngFor="let item of benefs" [value]="item">
+                                  <span style="font-size: 15px;">{{item.cin}}</span>
+                                </mat-option>
+                              </mat-autocomplete>
+                          </mat-form-field>
+                          <div class="mb-3">
+                            <label  for="montantInput" class="form-label">Montant</label>
+                            <input ngModel name="montant" matInput type="number" formControlName="montant" id="montantInput" placeholder="00.00" required>
+                          </div>
+                            
+                          <!-- <div class="mb-3">
+                            <label  for="ref" class="form-label">ref Agent</label>
+                            <input ngModel name="refagent" matInput type="text" formControlName="refagent" id="ref"  required>
+                          </div> -->
+                          </div>
+                          
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButton">Annuler</button>
+                          <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div> 
+                      </form>
+                       <!-- form end -->
+                  </div>
+                 
+              </div>
+              </div>
+          </div>
+            <!-- end add benef -->
+            <div class="card">
+              <div class="card-body">
+                <div class=" card-header">
+                <!-- second form -->
+
+                <form #addFormT="ngForm" (ngSubmit)="transfer(addFormT)" ng-change="changeT(addFormT)" [formGroup]="formGroupT">
+                  <div class="row">
+                    <div class="col-6">
+                      <mat-form-field>
+                        <mat-label>
+                          Beneficiaire
+                        </mat-label>
+                        <input ngModel name="benef" formControlName="benef" matInput type="text" [matAutocomplete]="auto" required/>
+                        <mat-autocomplete #auto="matAutocomplete"> 
+                          <mat-option *ngFor="let item of benefs" [value]="item">
+                            <span style="font-size: 15px;">{{item.cin}}</span>
+                          </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <div class="mb-3">
+                      <label  for="totalbenef" class="form-label">Nombre Bénéficiaire</label>
+                      <input ngModel name="totalbenef" matInput type="number" formControlName="totalbenef" id="totalbenef" placeholder="00.00" required>
+                    </div>
+                    <mat-error  *ngIf="isTotal">
+                      Le nombre de bénéficiaires saisis
+                      est différent du nombre de
+                      bénéficiaires sélectionnés
+                    </mat-error>
+                    </div>
+                    <div class="col-6">
+                    <div class="mb-3">
+                      <label  for="motif" class="form-label">Motif</label>
+                      <input ngModel name="motif" matInput type="text" formControlName="motif" id="motif"  required>
+                    </div>
+                    <div class="mb-3">
+                      <label  for="montantT" class="form-label">Total Montant</label>
+                      <input ngModel name="montantT" matInput type="number" formControlName="montantT" id="montantT" placeholder="00.00" required>
+                    </div>
+                    <mat-error *ngIf="isMontant">
+                      Le montant total doit être égal à la somme des montants des bénéficiaires                  </mat-error>
+                    </div>
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button [disabled]="addFormT.invalid" type="submit" class="btn btn-primary">Transferer</button>
+                  </div> 
+                </form>
+
+                <!-- end second form -->
+
+                </div>
+
+                
+              </div></div>
+        </div>
+    
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+       <!-- end -->
+        </div>
+  
+        </div>
+      </div>
