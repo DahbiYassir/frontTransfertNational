@@ -4,7 +4,13 @@
 
 export const environment = {
   production: false,
+<<<<<<< HEAD
   apiBaseUrl : 'https://client-servicee.herokuapp.com'
+=======
+  apiClientCompteUrl : 'https://client-servicee.herokuapp.com',
+  apiTransfertUrl : 'https://transfert-servicee.herokuapp.com',
+  apiAgentUrl : 'https://agent-servicee.herokuapp.com'
+>>>>>>> 37c7046709297912eb717e29c8b85ab573e62860
 };
 
 /*

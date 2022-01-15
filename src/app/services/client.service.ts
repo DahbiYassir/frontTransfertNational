@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ClientService {
 
-  private apiUrl = environment.apiBaseUrl;
+  private apiUrl = environment.apiClientCompteUrl;
   constructor(private http : HttpClient) { }
 
   public getClients() : Observable<Client>{
