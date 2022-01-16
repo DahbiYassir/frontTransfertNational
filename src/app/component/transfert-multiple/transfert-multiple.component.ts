@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angula
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../client';
+import { TransfertMultipleService } from '../../services/transfert-multiple.service';
 
 @Component({
   selector: 'app-transfert-multiple',
@@ -13,7 +14,7 @@ import { Client } from '../../client';
 
 export class TransfertMultipleComponent implements OnInit {
 
-  constructor(private clientService : ClientService,private fb : FormBuilder) { }
+  constructor(private clientService : ClientService,private transfertMService:TransfertMultipleService,private fb : FormBuilder) { }
 
   ngOnInit(): void {
     this.getAllClients();
@@ -118,7 +119,20 @@ this.clients.forEach(element=>{
   this.transfertBackend.clientsBenef.push(element.client.cin);
   this.transfertBackend.mapCinMontant.set(element.client.cin, element.montant);
  })
+ this.transfertBackend.refAgent = 'ref5457';
+ const convMap = {};
+ this.transfertBackend.mapCinMontant.forEach((val: string, key: string) => {
+  this.transfertBackend.mapCinMontant[key] = val;
+});
  console.log('hada hwa transfert back',this.transfertBackend);
+ this.transfertMService.transfertMultiple(this.transfertBackend).subscribe(
+  (response : any) =>{
+    console.log(response);
+  },
+  (error : HttpErrorResponse) =>{
+    console.log(error);
+  }
+)
   }
 
  changeT(event:NgForm){

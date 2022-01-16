@@ -12,14 +12,14 @@ export interface TransfertNational {
     clientBeneficiaire : String;
 }
 
-export enum StatusTransfert {
-    ASERVIR = "ASERVIR",
-    PAYE ="PAYE",
-    EXTOURNE ="EXTOURNE",
-    RESTITUE="RESTITUE",
-    BLOQUE ="BLOQUE"
-  }
+// export enum StatusTransfert {
+//     ASERVIR = "ASERVIR",
+//     PAYE ="PAYE",
+//     EXTOURNE ="EXTOURNE",
+//     RESTITUE="RESTITUE",
+//     BLOQUE ="BLOQUE"
+//   }
 
-export enum TypeTransfert {
-    POINTVENTE,GAB
-}
+// export enum TypeTransfert {
+//     POINTVENTE,GAB
+// }

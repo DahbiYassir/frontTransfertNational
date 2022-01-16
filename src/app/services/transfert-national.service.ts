@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { TransfertNational } from '../transfert-national';
 import { environment } from 'src/environments/environment';
 import { TransfertDto } from '../transfert-dto';
+import { TransfertExtourneDto } from '../transfert-extourne-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,9 @@ export class TransfertNationalService {
   }
   public addTransfert(transfert : TransfertDto) : Observable<TransfertNational>{
     return this.http.post<TransfertNational>(`${this.apiUrl}/transfert/transfertV2`,transfert)
+  }
+
+  public extourneTransfert(transfert :TransfertExtourneDto) : Observable<TransfertNational> {
+    return this.http.put<TransfertNational>(`${this.apiUrl}/transfert/transfertExtourne`,transfert);
   }
 }
