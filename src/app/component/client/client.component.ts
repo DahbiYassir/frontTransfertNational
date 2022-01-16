@@ -21,7 +21,7 @@ public deleteId ?:any;
 
 constructor(private clientService : ClientService) { }
 
-
+//test
   ngOnInit(): void {
     this.getAllClients();
   }
