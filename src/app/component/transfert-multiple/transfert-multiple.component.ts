@@ -5,6 +5,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../client';
 import { TransfertMultipleService } from '../../services/transfert-multiple.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-transfert-multiple',
@@ -26,14 +27,18 @@ export class TransfertMultipleComponent implements OnInit {
   formGroupT ?: FormGroup
  
   public clients : any[]=[];  
+  public clients2 : any[]=[];  
   public benefs : Client[]=[]; 
   public deletecin ?:any;
-
+  public benefsCin : String[]=[];
   
   public getAllClients() : void {
     this.clientService.getClients().subscribe(
       (response : any) =>{
         this.benefs = response;
+        // this.benefs.forEach((element)=>{
+        //    this.benefsCin.push(element.cin);
+        // })
         console.log('all clients',this.benefs)
       },
       (error : HttpErrorResponse) =>{
@@ -54,24 +59,55 @@ export class TransfertMultipleComponent implements OnInit {
     container?.appendChild(button);
     button.click();
   }
-  openDeleteBenef(clientD:String){
-    this.clients = this.clients.filter(function( obj ) {
-      return obj.client.cin !== clientD;
-  });  
-  document.getElementById('closeButton2')?.click();
-}
+  openDeleteBenef(clientD:string){
 
+this.clientService.getClientbyCin(clientD).subscribe(
+  response=>{
+    console.log('clientByCin',response);
+    this.benefs.unshift(response);
+    this.clients2 = this.clients2.filter(function( obj ) {
+      return obj.client.cin !== clientD;
+  });
+  console.log('before',this.clients);
+  this.clients = this.clients.filter(function( obj ) {
+    return obj.client !== clientD;
+});  
+document.getElementById('closeButton2')?.click();
+  },
+  (error:HttpErrorResponse)=>{
+    console.log('clientByCin ERROR',error);
+  }
+)
+console.log('hada benf apres',this.benefs);
+}
+test:any={client:null,montant:0};
+isNotNull:Boolean=false;
   public onAddBenef(addForm : NgForm) : void{
-    document.getElementById('closeButton')?.click();
+    if(addForm.value.montant<0 || addForm.value.montant>2000){
+      this.isNotNull = true;
+    }else{
     console.log("onAddClient Method");
     console.log(addForm.value);
     this.clients.push(addForm.value);
-    console.log('benef avant',this.benefs);
-    this.benefs = this.benefs.filter(function( obj ) {
-      return obj.cin !== addForm.value.client.cin;
-  });
-  console.log('benef apres',this.benefs);
-
+    this.clientService.getClientbyCin(addForm.value.client).subscribe(
+      response=>{
+        console.log('clientByCin',response);
+          this.test.client = response;
+          this.test.montant = addForm.value.montant;
+          this.clients2.push(this.test);
+        document.getElementById('closeButton')?.click();
+        this.benefs = this.benefs.filter(function( obj ) {
+          return obj.cin !== addForm.value.client;
+      });
+      console.log('benef apres',this.benefs);
+      this.test={client:null,montant:0};
+        addForm.resetForm();
+      },
+      (error:HttpErrorResponse)=>{
+        console.log('clientByCin ERROR',error);
+      }
+    )
+   }
   }
   initForm(){
     this.formGroup = this.fb.group({
@@ -113,11 +149,12 @@ this.clients.forEach(element=>{
  else{
    this.isMontant = false;
  }
-
- this.transfertBackend.clientSender = addFormT.value.benef.cin;
+ console.log('hada form t transfer',addFormT.value);
+ console.log('hada tab t transfer',this.clients);
+ this.transfertBackend.clientSender = addFormT.value.benef;
  this.clients.forEach(element=>{
-  this.transfertBackend.clientsBenef.push(element.client.cin);
-  this.transfertBackend.mapCinMontant.set(element.client.cin, element.montant);
+  this.transfertBackend.clientsBenef.push(element.client);
+  this.transfertBackend.mapCinMontant.set(element.client, element.montant);
  })
  this.transfertBackend.refAgent = 'ref5457';
  const convMap = {};
@@ -125,14 +162,40 @@ this.clients.forEach(element=>{
   this.transfertBackend.mapCinMontant[key] = val;
 });
  console.log('hada hwa transfert back',this.transfertBackend);
+ 
  this.transfertMService.transfertMultiple(this.transfertBackend).subscribe(
   (response : any) =>{
     console.log(response);
+    Swal.fire({
+      icon: 'success',
+      title: 'Transfert multiple réussi',
+    })
+    this.clients = [];
+    this.clients2 = [];
+    this.transfertBackend={
+      clientSender:String,
+      clientsBenef: [],
+      mapCinMontant: new Map<String,Number>(),
+      refAgent:String
+    };
+    addFormT.resetForm();
   },
   (error : HttpErrorResponse) =>{
     console.log(error);
   }
 )
+
+  }
+
+  public getClientByCin(cin:string) : any{
+     this.clientService.getClientbyCin(cin).subscribe(
+      response=>{
+        console.log('clientByCin',response);
+      },
+      (error:HttpErrorResponse)=>{
+        console.log('clientByCin ERROR',error);
+      }
+    )
   }
 
  changeT(event:NgForm){

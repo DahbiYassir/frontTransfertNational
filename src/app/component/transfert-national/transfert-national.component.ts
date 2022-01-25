@@ -8,6 +8,7 @@ import { Client } from '../../client';
 import { TransfertDto } from '../../transfert-dto';
 import { TransfertExtourneDto } from '../../transfert-extourne-dto';
 import Swal from 'sweetalert2';
+import { TransfertPayee } from '../../transfert-payee';
 
 
 
@@ -144,6 +145,10 @@ export class TransfertNationalComponent implements OnInit {
     refAgent: "",
     motifExtourne: ""
   };
+  transfertPayeDTO:TransfertPayee={
+    reference: "",
+    cinReceiver: ""
+    };
   motifE:String="";
   formextourne(extForm:NgForm){
     console.log('formE value',extForm.value.motifExtourne);
@@ -158,6 +163,13 @@ export class TransfertNationalComponent implements OnInit {
       })
       document.getElementById('closeButtonE')?.click();
 
+    }
+    else if(t.status=='PAYE'){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Transfert deja payé !',
+      }) 
     }
     else{
     console.log(t);
@@ -179,5 +191,42 @@ export class TransfertNationalComponent implements OnInit {
       }
     )
   }
+}
+
+payerTransfert(t:any){
+  this.transfertPayeDTO.cinReceiver = t.clientBeneficiaire;
+  this.transfertPayeDTO.reference = t.reference;
+  if(t.status=='PAYE'){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Transfert deja payé !',
+    }) 
+  }
+  else{                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+  Swal.fire({
+    title: 'Payer un transfert !',
+    text: "Etes-vous sûr de vouloir payer ce transfert ?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Oui'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.transfertService.payeTransfert(this.transfertPayeDTO).subscribe(
+        (response:any)=>{
+          console.log(response);
+          this.getTransferts();
+          Swal.fire(
+            'Transfert payé!',
+            'success'
+          )
+        }
+      )
+     
+    }
+  })
+}
 }
 }

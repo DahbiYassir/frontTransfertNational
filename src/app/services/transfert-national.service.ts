@@ -5,6 +5,7 @@ import { TransfertNational } from '../transfert-national';
 import { environment } from 'src/environments/environment';
 import { TransfertDto } from '../transfert-dto';
 import { TransfertExtourneDto } from '../transfert-extourne-dto';
+import { TransfertPayee } from '../transfert-payee';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class TransfertNationalService {
 
   public extourneTransfert(transfert :TransfertExtourneDto) : Observable<TransfertNational> {
     return this.http.put<TransfertNational>(`${this.apiUrl}/transfert/transfertExtourne`,transfert);
+  }
+
+  public payeTransfert(transfert :TransfertPayee) : Observable<TransfertNational> {
+    return this.http.put<TransfertNational>(`${this.apiUrl}/transfert/transfertPaye`,transfert);
   }
 }

@@ -65,8 +65,10 @@
                       </td>
                       <td>
                         <a class ="btn" (click)="openExtourneModal(t)"><i style="color: red;" class="fas fa-undo-alt"></i></a>
-                    </td>
-                  </tr>              
+                        <a class ="btn" (click)="payerTransfert(t)"><i style="color: green;" class="fas fa-money-check-alt"></i></a>
+                      </td>
+                    
+                  </tr>            
               </tbody>
               <pagination-controls (pageChange)= "p = $event"></pagination-controls>
           </table>
