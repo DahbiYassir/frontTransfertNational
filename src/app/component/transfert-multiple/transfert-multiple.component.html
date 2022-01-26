@@ -21,11 +21,12 @@
                 <!-- tableau benef -->
                    <!-- Tableau -->
           <div class="table-responsive">
+            <h4 class="card-title">Table des bénéficiaires</h4>
             <table class="table align-middle text-nowrap">
                 <thead>
                     <tr>
-                       
-                        <th class="text-dark font-medium fs-4">Client</th>
+                      
+                        <th class="text-dark font-medium fs-4">Bénéficiaire</th>
                         <th class="text-dark font-medium fs-4">Montant</th>
                         <th>
                                      <!-- Button add modal -->
@@ -36,25 +37,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let c of clients;">
+                    <tr *ngFor="let c2 of clients2;">
                         <td>
                             <div class="d-flex align-items-center">
                                 <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" alt="user" width="35" class="rounded-circle">
                                 <div class="ms-3">
-                                    <h5 class="mb-0 font-medium">{{c.client.nom}} {{c.client.prenom}}</h5>
-                                    <span class="text-muted">{{c.client.cin}}</span>
+                                    <h5 class="mb-0 font-medium">{{c2.client.nom}} {{c2.client.prenom}}</h5>
+                                    <span class="text-muted">{{c2.client.cin}}</span>
                                 </div>
                             </div>
                         </td>
 
     
                         <td>
-                            <h5 class="mb-0 fw-normal">{{c.montant}}</h5>
+                            <h5 class="mb-0 fw-normal">{{c2.montant}}</h5>
                         </td>
 
 
                         <td>
-                            <a class="btn" (click)="openDeleteModal(c.client.cin)"><i class="far fa-trash-alt" style="color:red"></i></a>
+                            <a class="btn" (click)="openDeleteModal(c2.client.cin)"><i class="far fa-trash-alt" style="color:red"></i></a>
                         </td>
                     </tr>              
                 </tbody>
@@ -85,7 +86,7 @@
               <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Ajouter un Client</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Ajouter un Bénéficiaire</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -97,7 +98,7 @@
                               <mat-label>
                                 Beneficiaire
                               </mat-label>
-                              <input ngModel name="client" formControlName="client" matInput type="text" [matAutocomplete]="auto" />
+                              <input ngModel name="client" formControlName="client" matInput type="text" [matAutocomplete]="auto" required/>
                               <mat-autocomplete #auto="matAutocomplete"> 
                                 <mat-option *ngFor="let item of benefs" [value]="item.cin">
                                   <span style="font-size: 15px;">{{item.cin}}</span>
@@ -108,6 +109,9 @@
                             <label  for="montantInput" class="form-label">Montant</label>
                             <input ngModel name="montant" matInput type="number" formControlName="montant" id="montantInput" placeholder="00.00" required>
                           </div>
+                          <mat-error  *ngIf="isNotNull">
+                            Montant doit etre entre 0 et 2000 Dh !
+                          </mat-error>
                             
                           <!-- <div class="mb-3">
                             <label  for="ref" class="form-label">ref Agent</label>
@@ -118,7 +122,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButton">Annuler</button>
-                          <button type="submit" class="btn btn-primary">Ajouter</button>
+                          <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Ajouter</button>
                         </div> 
                       </form>
                        <!-- form end -->
@@ -138,12 +142,12 @@
                     <div class="col-6">
                       <mat-form-field>
                         <mat-label>
-                          Beneficiaire
+                          Client
                         </mat-label>
                         <input ngModel name="benef" formControlName="benef" matInput type="text" [matAutocomplete]="auto" required/>
                         <mat-autocomplete #auto="matAutocomplete"> 
-                          <mat-option *ngFor="let item of benefs" [value]="item">
-                            <span style="font-size: 15px;">{{item.cin}}</span>
+                          <mat-option *ngFor="let itemm of benefs" [value]="itemm.cin">
+                            <span style="font-size: 15px;">{{itemm.cin}}</span>
                           </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>

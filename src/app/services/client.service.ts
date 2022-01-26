@@ -28,7 +28,7 @@ export class ClientService {
     return this.http.get<Client>((`${this.apiUrl}/clients/tel/${tel}`));
   }
   public getClientbyCin(cin : string) : Observable<Client>{
-    return this.http.get<Client>((`${this.apiUrl}/clients/tel/${cin}`));
+    return this.http.get<Client>((`${this.apiUrl}/clients/cin/${cin}`));
   }
 
 }
