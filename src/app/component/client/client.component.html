@@ -70,7 +70,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let c of clients | searchFilter : searchText | paginate: {itemsPerPage:10, currentPage:p};">
+                    <tr *ngFor="let c of clients | searchFilter : searchText | paginate: {itemsPerPage:5, currentPage:p};">
                         <td>
                             <div class="d-flex align-items-center">
                                 <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" alt="user" width="35" class="rounded-circle">
@@ -153,7 +153,7 @@
                    <h5><i style="color:red" class="far fa-exclamation-circle"></i> Etes-vous sûr de vouloir supprimer ce client ?</h5>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button id="closeButton3" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                     <button type="button" class="btn btn-danger" (click)="onDeleteClient(deleteId)">Supprimer</button>
                   </div>
                

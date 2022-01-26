@@ -85,7 +85,7 @@
           <h5><i style="color:red" class="far fa-exclamation-circle"></i> Etes-vous sûr de vouloir extourner ce transfert ?</h5>
           <form #extForm="ngForm" [formGroup]="formGroupExtourne">
           <label  for="motif" class="form-label">Motif d'extourne</label>
-          <input ngModel name="motif" type="text" formControlName="motifExtourne" id="motif" required>
+          <input style="margin-left:10px;" ngModel name="motif" type="text" formControlName="motifExtourne" id="motif" required>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButtonE">Annuler</button>
             <button type="submit" class="btn btn-danger" [disabled]="extForm.invalid" (click)="extournerTransfert(transfertE,extForm)" >Extourner</button>
@@ -115,13 +115,14 @@
                 <mat-label>
                   Client
                 </mat-label>
-                <input ngModel name="client" formControlName="client" matInput type="text" [matAutocomplete]="auto" />
+                <input ngModel formControlName="client" matInput type="text" [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete"> 
                   <mat-option *ngFor="let item of filtredOptions" [value]="item">
                     <span style="font-size: 10px;">{{item}}</span>
                   </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
+            <div *ngIf="notif" style="color:red; margin-top: -10px">*ce client n'existe pas ! <a href="http://localhost:4200/component/clients">ajouter</a></div>
             <div class="mb-3">
               <label  for="montantInput" class="form-label">Montant</label>
               <input ngModel name="montant" matInput type="number" formControlName="montant" id="montantInput" placeholder="00.00" required>
@@ -136,18 +137,19 @@
                 <mat-label>
                   Beneficiare
                 </mat-label>
-                <input ngModel name="beneficiare" formControlName="beneficiare" matInput type="text" [matAutocomplete]="auto" />
-                <mat-autocomplete #auto="matAutocomplete"> 
-                  <mat-option *ngFor="let item of filtredOptions2" [value]="item">
-                    {{item}}
+                <input ngModel formControlName="beneficiare" matInput type="text" [matAutocomplete]="auto2" />
+                <mat-autocomplete #auto2="matAutocomplete"> 
+                  <mat-option *ngFor="let item2 of filtredOptions2" [value]="item2">
+                    <span style="font-size: 10px;">{{item2}}</span>
                   </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
+            <div *ngIf="notif2" style="color:red; margin-top: -10px">*ce beneficiare n'existe pas ! <a href="http://localhost:4200/component/clients">ajouter</a></div>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButtonT">Annuler</button>
-            <button type="submit" class="btn btn-primary">Valider</button>
+            <button [disabled]="(notif != false || notif2 != false)? true:false" type="submit" class="btn btn-primary">Valider</button>
           </div> 
         </form>
         </div>

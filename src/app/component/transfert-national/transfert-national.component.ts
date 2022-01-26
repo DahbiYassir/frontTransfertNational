@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, FormControl } from '@angular/forms';
 import { TransfertNational } from '../../transfert-national';
 import { TransfertNationalService } from '../../services/transfert-national.service';
 import { HttpErrorResponse } from '@angular/common/http/http';
@@ -16,14 +16,17 @@ import Swal from 'sweetalert2';
   templateUrl: './transfert-national.component.html',
   styleUrls: ['./transfert-national.component.scss']
 })
+
 export class TransfertNationalComponent implements OnInit {
   title ='autocomplete';
   options : String[] = [];
+  options2 : String[] = [];
   filtredOptions :String[] = [];
   filtredOptions2 :String[] = [];
   formGroup ?: FormGroup
   formGroupExtourne ?: FormGroup
-
+  notif : boolean = false;
+  notif2 : boolean = false;
   searchText : String="";
    t : TransfertDto = {
     clientSender : "",
@@ -54,22 +57,47 @@ export class TransfertNationalComponent implements OnInit {
       'motifExtourne' : ['']
       
     })
+    this.formGroup.get('beneficiare')?.valueChanges.subscribe(response2 => {
+      this.filterData2(response2);
+      console.log("response 2 : " +response2)
+    } )
     this.formGroup.get('client')?.valueChanges.subscribe(response => {
       this.filterData(response);
+      console.log("response 1 : " +response)
     } )
-    this.formGroup.get('beneficiare')?.valueChanges.subscribe(response => {
-      this.filterData(response);
-    } )
+    
   }
   filterData(entredData : any){
     this.filtredOptions = this.options.filter(item=>{
-      return item.toLowerCase().indexOf(entredData.toLowerCase()) > -1
-    })
-    this.filtredOptions2 = this.options.filter(item=>{
+      console.log(this.filtredOptions)
+      if(this.filtredOptions.length == 0 ) {
+        console.log("c'est nul !!!!!")
+        this.notif = true
+
+      }
+      else{
+        console.log("c'est pas nul !!!!!")
+        this.notif = false;
+      }
       return item.toLowerCase().indexOf(entredData.toLowerCase()) > -1
     })
   }
   
+  filterData2(entredData2 : any){
+    this.filtredOptions2 = this.options2.filter(item2=>{
+      console.log(this.filtredOptions2)
+      if(this.filtredOptions2.length == 0 ) {
+        console.log("c'est nul !!!!!")
+        this.notif2 = true
+
+      }
+      else{
+        console.log("c'est pas nul !!!!!")
+        this.notif2 = false;
+      }
+      return item2.toLowerCase().indexOf(entredData2.toLowerCase()) > -1
+    })
+  }
   getTransferts(){
     this.transfertService.getTransferts().subscribe(
       (response : any) =>{
@@ -92,6 +120,7 @@ export class TransfertNationalComponent implements OnInit {
           console.log('element')
           console.log(element.cin);
           this.options.push(element.cin)
+          this.options2.push(element.cin)
           this.filtredOptions.push(element.cin)
           this.filtredOptions2.push(element.cin)
         });
@@ -122,7 +151,10 @@ export class TransfertNationalComponent implements OnInit {
           })
           this.getTransferts();
         },(error : HttpErrorResponse) =>{
-          alert(error.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops ! Quelque chose s\'est mal passé',
+          })
         }
       )
   }

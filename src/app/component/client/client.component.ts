@@ -4,6 +4,7 @@ import { Client } from '../../client';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClientService } from '../../services/client.service';
 import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-client',
@@ -27,12 +28,21 @@ constructor(private clientService : ClientService) { }
   }
   public onDeleteClient(id : number){
     console.log('Id :' +id);
+    document.getElementById('closeButton3')?.click();
     this.clientService.deleteClient(id).subscribe(
         (response : any) =>{
           console.log('Client supprimmé !');
           this.getAllClients();
+          Swal.fire({
+            icon: 'success',
+            title: 'Client supprimé !',
+          })
         },(error : HttpErrorResponse) =>{
-          alert(error.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops ! quelque chose s\'est mal passé',
+          })
+
         }
       )
   }
@@ -58,8 +68,16 @@ constructor(private clientService : ClientService) { }
         (response : Client) =>{
           console.log('Client mise à jour !');
           this.getAllClients();
+          Swal.fire({
+            icon: 'success',
+            title: 'Client mise à jour !',
+          })
         },(error : HttpErrorResponse) =>{
           alert(error.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops ! Quelque chose s\'est mal passé',
+          })
         }
       )
   }
@@ -84,8 +102,16 @@ constructor(private clientService : ClientService) { }
         (response : Client) =>{
           console.log('Ajout client réussi');
           this.getAllClients();
+          Swal.fire({
+            icon: 'success',
+            title: 'Ajout client réussi',
+          })
         },(error : HttpErrorResponse) =>{
           alert(error.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops ! Quelque chose s\'est mal passé',
+          })
         }
       )
   }
