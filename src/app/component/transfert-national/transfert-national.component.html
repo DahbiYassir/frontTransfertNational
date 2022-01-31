@@ -37,7 +37,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor="let t of transferts | searchFilter : searchText | paginate: {itemsPerPage:5, currentPage:p};">
+                  <tr *ngFor="let t of transferts  | reverse | searchFilter : searchText | paginate: {itemsPerPage:5, currentPage:p};">
                       <td>
                           <div class="d-flex align-items-center">
                               <img src="https://us.123rf.com/450wm/alexsunset/alexsunset1612/alexsunset161200336/69423244-cash-icon-en-style-plat-isol%C3%A9-sur-fond-blanc-symbole-d-argent-pour-la-conception-de-sites-web-logo-i.jpg?ver=6" alt="user" width="35" class="rounded-circle">

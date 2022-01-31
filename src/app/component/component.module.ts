@@ -48,6 +48,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { ReversePipe } from './reverse.pipe';
 
 @NgModule({
   imports: [
@@ -112,7 +113,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     ClientComponent,
     SearchFilterPipe,
     TransfertNationalComponent,
-    TransfertMultipleComponent
+    TransfertMultipleComponent,
+    ReversePipe
   ]
 })
 export class ComponentsModule { }
