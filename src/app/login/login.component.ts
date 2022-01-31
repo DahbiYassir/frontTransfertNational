@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       var ref = this.loginForm.get('username').value;    
       this.agentService.loginAgent(ref).subscribe(
         (response : any) =>{
-            if(response != null && response.ref_agent != null){
+            if(response != null && response.refAgent != null){
               console.log(response);
               this.router.navigate(['/dashboard']);
             }
