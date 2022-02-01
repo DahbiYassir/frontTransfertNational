@@ -10,7 +10,11 @@
               <h5 class="card-subtitle text-muted">Agence Marrakech</h5>
           </div>
           <!-- Button add modal -->
-        
+          <div class="col-2">
+            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Nouveau Transfert
+          </button>
+          </div>
       </div>
 
       <!-- Search Bar -->
@@ -29,15 +33,11 @@
                       <th class="text-dark font-medium fs-4">Statut</th>
                       <th class="text-dark font-medium fs-4">Client</th>
                       <th class="text-dark font-medium fs-4">Beneficiare</th>
-                      <th>
-                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                          Nouveau Transfert
-                      </button>
-           </th>
+                      <th class="text-dark font-medium fs-4">Date de Création</th>
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor="let t of transferts | searchFilter : searchText | paginate: {itemsPerPage:5, currentPage:p};">
+                  <tr *ngFor="let t of transferts  | reverse | searchFilter : searchText | paginate: {itemsPerPage:5, currentPage:p};">
                       <td>
                           <div class="d-flex align-items-center">
                               <img src="https://us.123rf.com/450wm/alexsunset/alexsunset1612/alexsunset161200336/69423244-cash-icon-en-style-plat-isol%C3%A9-sur-fond-blanc-symbole-d-argent-pour-la-conception-de-sites-web-logo-i.jpg?ver=6" alt="user" width="35" class="rounded-circle">
@@ -64,12 +64,17 @@
                           <h5 class="mb-0 fw-normal">{{t.clientBeneficiaire}}</h5>
                       </td>
                       <td>
+                        <h5 class="mb-0 fw-normal">{{t.dateCreation | date:'short'}}</h5>
+                    </td>
+                      <td>
                         <a class ="btn" (click)="openExtourneModal(t)"><i style="color: red;" class="fas fa-undo-alt"></i></a>
                         <a class ="btn" (click)="payerTransfert(t)"><i style="color: green;" class="fas fa-money-check-alt"></i></a>
                       </td>
                     
                   </tr>            
               </tbody>
+              <mat-progress-spinner diameter="70" [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
+
               <pagination-controls (pageChange)= "p = $event"></pagination-controls>
           </table>
       </div>

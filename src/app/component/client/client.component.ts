@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ClientService } from '../../services/client.service';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-client',
@@ -19,8 +20,8 @@ export class ClientComponent implements OnInit {
 public clients : Client[]=[];
 public editClient ?: Client ;
 public deleteId ?:any;
-
-constructor(private clientService : ClientService) { }
+constructor(private clientService : ClientService,public loader: LoadingService) { }
+loading$ = this.loader.loading$;
 
 //test
   ngOnInit(): void {

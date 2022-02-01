@@ -9,6 +9,7 @@ import { TransfertDto } from '../../transfert-dto';
 import { TransfertExtourneDto } from '../../transfert-extourne-dto';
 import Swal from 'sweetalert2';
 import { TransfertPayee } from '../../transfert-payee';
+import { LoadingService } from '../../services/loading.service';
 
 
 
@@ -40,7 +41,8 @@ export class TransfertNationalComponent implements OnInit {
   p : number = 1;
   
   
-  constructor(private clientService : ClientService,private transfertService : TransfertNationalService, private fb : FormBuilder) {  }
+  constructor(public loader: LoadingService,private clientService : ClientService,private transfertService : TransfertNationalService, private fb : FormBuilder) {  }
+  loading$ = this.loader.loading$;
 
   ngOnInit(): void {
     this.initForm();

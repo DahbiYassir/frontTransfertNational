@@ -70,7 +70,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let c of clients | searchFilter : searchText | paginate: {itemsPerPage:5, currentPage:p};">
+                    <tr *ngFor="let c of clients  | reverse | searchFilter : searchText | paginate: {itemsPerPage:5, currentPage:p};">
                         <td>
                             <div class="d-flex align-items-center">
                                 <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" alt="user" width="35" class="rounded-circle">
@@ -96,6 +96,8 @@
                         </td>
                     </tr>              
                 </tbody>
+                <mat-progress-spinner diameter="70" [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
+
                 <pagination-controls (pageChange)= "p = $event"></pagination-controls>
             </table>
         </div>
@@ -131,7 +133,7 @@
                             <input type="number" ngModel="{{editClient?.telephone}}" name="telephone" class="form-control" id="telInput" required>
                         </div>
                         <div class="mb-3">
-                            <input type="text" ngModel="{{editClient?.dateCreation}}" name="dateCreation" class="form-control" id="dateInput" >
+                            <input type="text" ngModel="{{editClient?.dateCreation}}" name="dateCreation" class="form-control" id="dateInput" hidden>
                         </div>
                         <div class="modal-footer">
                             <button id="closeButton2" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
