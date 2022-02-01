@@ -96,6 +96,8 @@
                         </td>
                     </tr>              
                 </tbody>
+                <mat-progress-spinner diameter="70" [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
+
                 <pagination-controls (pageChange)= "p = $event"></pagination-controls>
             </table>
         </div>
