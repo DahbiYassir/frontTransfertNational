@@ -1,4 +1,5 @@
 export interface TransfertNational {
+    salesforceId : String ;
     codeT : number;
     reference : String;
     pin : String;

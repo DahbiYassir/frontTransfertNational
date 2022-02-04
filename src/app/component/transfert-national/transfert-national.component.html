@@ -14,10 +14,15 @@
             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
               Nouveau Transfert
           </button>
+          
 
           </div>
       </div>
-
+      <div class="container p-5">
+        <!-- Button trigger modal -->
+        
+        
+       
       <!-- Search Bar -->
       <div class="form-group" style="margin-top:15px; margin-bottom:15px;">
           <input type="text" class="form-control search-field" placeholder="Recherche" [(ngModel)]="searchText">
@@ -45,6 +50,7 @@
                               <div class="ms-3">
                                   <h5 class="mb-0 font-medium">{{t.codeT}}</h5>
                                   <span class="text-muted">{{t.reference}}</span>
+                                  
                               </div>
                           </div>
                       </td>
@@ -70,6 +76,33 @@
                       <td>
                         <a class ="btn" (click)="openExtourneModal(t)"><i style="color: red;" class="fas fa-undo-alt"></i></a>
                         <a class ="btn" (click)="payerTransfert(t)"><i style="color: green;" class="fas fa-money-check-alt"></i></a>
+                        <button style="width: 20px; height:20px;padding:0px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          r
+                        </button>
+                         <!-- Modal -->
+         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">RECU</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+            <iframe
+            [src]=getSantizeUrl(t.salesforceId)
+            frameBorder="0"
+            scrolling="auto"
+            height="500px%"
+            width="100%"
+        ></iframe>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- fin modal -->
                       </td>
                     
                   </tr>            

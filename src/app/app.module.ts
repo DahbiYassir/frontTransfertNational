@@ -26,8 +26,9 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { LoginComponent } from './login/login.component';
-import { InterceptorService } from './services/interceptor.service';
 import { AuthGuard } from './auth.guard';
+import { InterceptorService } from './services/interceptor.service';
+import { SafePipe } from './safe.pipe';
 
 
 
@@ -46,6 +47,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NavigationComponent,
     SidebarComponent,
     LoginComponent,
+    SafePipe,
   ],
   imports: [
     

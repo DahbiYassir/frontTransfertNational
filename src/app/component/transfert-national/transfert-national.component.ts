@@ -10,7 +10,7 @@ import { TransfertExtourneDto } from '../../transfert-extourne-dto';
 import Swal from 'sweetalert2';
 import { TransfertPayee } from '../../transfert-payee';
 import { LoadingService } from '../../services/loading.service';
-
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -20,6 +20,7 @@ import { LoadingService } from '../../services/loading.service';
 })
 
 export class TransfertNationalComponent implements OnInit {
+  url : any = this.getSantizeUrl("https://mindful-otter-uy73n9-dev-ed--c.visualforce.com/apex/recu?id=a008d000002sVhjAAE");
   title ='autocomplete';
   options : String[] = [];
   options2 : String[] = [];
@@ -41,7 +42,7 @@ export class TransfertNationalComponent implements OnInit {
   p : number = 1;
   
   
-  constructor(public loader: LoadingService,private clientService : ClientService,private transfertService : TransfertNationalService, private fb : FormBuilder) {  }
+  constructor(public loader: LoadingService,private clientService : ClientService,private transfertService : TransfertNationalService, private fb : FormBuilder,public sanitizer: DomSanitizer) {  }
   loading$ = this.loader.loading$;
 
   ngOnInit(): void {
@@ -49,6 +50,9 @@ export class TransfertNationalComponent implements OnInit {
     this.getTransferts();
     this.getClients();
   }
+  getSantizeUrl(url : string) { 
+    return this.sanitizer.bypassSecurityTrustResourceUrl("https://mindful-otter-uy73n9-dev-ed--c.visualforce.com/apex/recu?id="+url); 
+}
 
   initForm(){
     this.formGroup = this.fb.group({
