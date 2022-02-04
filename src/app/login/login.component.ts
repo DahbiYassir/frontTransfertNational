@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AgentService } from '../services/agent.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -21,16 +22,19 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
 
-      var ref = this.loginForm.get('username').value;    
+      
+    var ref = this.loginForm.get('username').value; 
+    var pass = this.loginForm.get('password').value;    
       this.agentService.loginAgent(ref).subscribe(
         (response : any) =>{
-            if(response != null && response.refAgent != null){
+            if(response != null && response.refAgent != null && pass=="1234"){
               console.log(response);
+              environment.logged = true;
               this.router.navigate(['/dashboard']);
             }
         },
         (error : HttpErrorResponse) =>{
-          alert(error.message);
+          console.log(error.message);
         }
       );
 
