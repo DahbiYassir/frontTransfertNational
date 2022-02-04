@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  logged: false,
   production: false,
   apiBaseUrl : 'https://client-servicee.herokuapp.com',
   apiClientCompteUrl : 'https://client-servicee.herokuapp.com',
