@@ -50,6 +50,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ReversePipe } from './reverse.pipe';
 
+
 @NgModule({
   imports: [
     CommonModule,
