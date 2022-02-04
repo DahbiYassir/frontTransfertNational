@@ -6,7 +6,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-
+  
   constructor(private router: Router){}
 
   canActivate(): boolean{
@@ -17,5 +17,6 @@ export class AuthGuard implements CanActivate {
       return false;
     }
   }
+  
   
 }

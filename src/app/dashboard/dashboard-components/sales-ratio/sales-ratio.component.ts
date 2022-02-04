@@ -33,20 +33,21 @@ export type salesChartOptions = {
   selector: 'app-sales-ratio',
   templateUrl: './sales-ratio.component.html'
 })
+
+
 export class SalesRatioComponent implements OnInit {
 
+
+  montant2 : number [] = [5,10,15,20]
   @ViewChild("chart") chart: ChartComponent = Object.create(null);
   public salesChartOptions: Partial<salesChartOptions>;
   constructor() {
     this.salesChartOptions = {
       series: [
+        
         {
-          name: "2020",
-          data: [20, 40, 50, 30, 40, 50, 30, 30, 40],
-        },
-        {
-          name: "2022",
-          data: [10, 20, 40, 60, 20, 40, 50, 60, 20],
+        
+          data: this.montant2,
         },
       ],
       chart: {
@@ -71,14 +72,10 @@ export class SalesRatioComponent implements OnInit {
       },
       xaxis: {
         categories: [
-          "Jan",
-          "Feb",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "Aug",
+          "500",
+          "1000",
+          "1500",
+          "2000",
         ],
       },
       tooltip: {

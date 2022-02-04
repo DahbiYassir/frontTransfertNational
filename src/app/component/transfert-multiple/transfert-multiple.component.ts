@@ -6,6 +6,7 @@ import { ClientService } from '../../services/client.service';
 import { Client } from '../../client';
 import { TransfertMultipleService } from '../../services/transfert-multiple.service';
 import Swal from 'sweetalert2';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-transfert-multiple',
@@ -15,7 +16,8 @@ import Swal from 'sweetalert2';
 
 export class TransfertMultipleComponent implements OnInit {
 
-  constructor(private clientService : ClientService,private transfertMService:TransfertMultipleService,private fb : FormBuilder) { }
+  constructor(public loader: LoadingService,private clientService : ClientService,private transfertMService:TransfertMultipleService,private fb : FormBuilder) { }
+  loading$ = this.loader.loading$;
 
   ngOnInit(): void {
     this.getAllClients();

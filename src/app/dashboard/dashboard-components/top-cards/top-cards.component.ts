@@ -58,6 +58,12 @@ export class TopCardsComponent implements OnInit {
       icon: 'bi bi-arrow-down-up',
       title: this.nombreTf,
       subtitle: 'Nombre de Transferts'
+    },
+    {
+      bgcolor: 'info',
+      icon: 'bi bi-layers',
+      title: 80000,
+      subtitle: 'Plafond MAD'
     }];
   }
   total : number = 0;
