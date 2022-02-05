@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 import { AgentService } from '../services/agent.service';
 
 @Component({
